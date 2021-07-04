@@ -1,6 +1,12 @@
 # PAWL: Python API Wrapper for LinkedIn
 
-OAuth flow will be added in the next revision.
+---
+
+![PyPI - Version](https://img.shields.io/pypi/v/pawl?color=blue)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pawl)
+![PyPI - Monthly Downloads](https://img.shields.io/pypi/dm/pawl)
+
+PAWL (an acronym for `Python API Wrapper - LinkedIn`) allows for simple access to LinkedIn's API with only a single dependency.
 
 ## Installation
 
@@ -10,51 +16,65 @@ PAWL is supported on Python 3.9+. The recommended way to install PAWL is with pi
 
 ## Quickstart
 
-You can instantiate an instance like so:
+The depicted implementation of `access_token` below will be replaced by OAuth2 flow in **v0.0.2**.
 
 ```python
-import pawl
+# Demo in python/ipython shell
+# Don't forget to install pawl first
+
+>>> import pawl
 
 >>> linkedin = pawl.Linkedin(
-    access_token="ACCESS_TOKEN_VALUE",
+    access_token="ACCESS_TOKEN_VALUE"
 )
 
 >>> linkedin
 <pawl.linkedin.Linkedin at 0x10ea46af0>
 ```
 
-#### get_basic_profile()
+#### GET PROFILE:
+
 ```python
+# Demo in python/ipython shell
+
+>>> linkedin
+<pawl.linkedin.Linkedin at 0x10ea46af0>
+
 >>> response = linkedin.me.get_basic_profile()
 
 >>> response
 {
     'localizedLastName': 'LAST_NAME',
     'profilePicture': {
-        'displayImage': 'urn:li:digitalmediaAsset:PHOTO_ID_VALUE'
+        'displayImage': 'PHOTO_ID'
     },
     'firstName': {
         'localized': {
-            'language_code_value_and_country_code_value': 'FIRST_NAME_VALUE'
+            'LANG_CODE_COUNTRY_CODE': 'FIRST_NAME'
         },
         'preferredLocale': {
-            'country': 'country_code_value', 'language': 'language_code_value'
+            'country': 'COUNTRY_CODE_VALUE',
+            'language': 'LANGUAGE_CODE'
         }
     },
     'lastName': {
         'localized': {
-            'language_code_value_and_country_code_value':
-            'LAST_NAME_VALUE'
+            'LANG_CODE_COUNTRY_CODE':
+            'LAST_NAME'
         },
         'preferredLocale': {
-            'country': 'country_code_value',
-            'language': 'language_value'
+            'country': 'COUNTRY_CODE',
+            'language': 'LANGUAGE_CODE'
         }
     },
-    'id': 'USER_ID_VALUE',
-    'localizedFirstName': 'localized_first_name_value'
+    'id': 'USER_ID',
+    'localizedFirstName': 'LOCALIZED_FIRST_NAME'
 }
 ```
+
+## Sources
+
+The work that went into PAWL is not entirely my own. I learned a lot from open-sourced code written by [many incredible developers](docs/CREDITS.md).
 
 ## License
 
