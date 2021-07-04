@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "pawl"
+version = "0.0.1"
+description = "PAWL (an acronym for `Python API Wrapper - LinkedIn`) allows for simple access to LinkedIn's API."
+authors = ["Kyle J. Burda <kylejbdev@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+keywords = ["linkedin", "api", "wrapper"]
+  classifiers=[
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.9",
+        "Topic :: Utilities",
+    ]
+include = [
+    "LICENSE",
+]
+[tool.poetry.urls]
+"Source Code" = "https://github.com/kylejb/pawl"
+"Bug Tracker" = "https://github.com/kylejb/pawl/issues"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.25.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[tool.black]
+exclude = '/(\.eggs|\.git|\.hg|\.mypy_cache|\.nox|\.tox|\.venv.*|_build|buck-out|build|dist)/'
+line-length = 88
+
+[tool.isort]
+profile = "black"
+skip_glob = '.venv*'
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
