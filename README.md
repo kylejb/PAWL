@@ -16,7 +16,8 @@ PAWL is supported on Python 3.9+. The recommended way to install PAWL is with pi
 
 ## Quickstart
 
-The depicted implementation of `access_token` below will be replaced by OAuth2 flow in **v0.0.2**.
+See [examples/authenticate](docs/examples/authenticate.py).
+
 
 ```python
 # Demo in python/ipython shell
@@ -25,7 +26,9 @@ The depicted implementation of `access_token` below will be replaced by OAuth2 f
 >>> import pawl
 
 >>> linkedin = pawl.Linkedin(
-    access_token="ACCESS_TOKEN_VALUE"
+    client_id="CLIENT_ID_VALUE",
+    client_secret="CLIENT_SECRET_VALUE",
+    redirect_uri="http://localhost:8000",
 )
 
 >>> linkedin
@@ -40,7 +43,7 @@ The depicted implementation of `access_token` below will be replaced by OAuth2 f
 >>> linkedin
 <pawl.linkedin.Linkedin at 0x10ea46af0>
 
->>> response = linkedin.me.get_basic_profile()
+>>> response = linkedin.current_user.basic_profile()
 
 >>> response
 {
