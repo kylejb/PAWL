@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pawl"
-version = "0.0.2"
+version = "0.1.0"
 description = "PAWL (an acronym for `Python API Wrapper - LinkedIn`) allows for simple access to LinkedIn's API."
 authors = ["Kyle J. Burda <kylejbdev@gmail.com>"]
 license = "MIT"
