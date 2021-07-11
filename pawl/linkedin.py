@@ -58,8 +58,8 @@ class Linkedin:
             self._token_manager.linkedin = self
             authorizer = Authorizer(
                 authenticator,
-                post_refresh_callback=self._token_manager.post_refresh_callback,
-                pre_refresh_callback=self._token_manager.pre_refresh_callback,
+                post_access_callback=self._token_manager.post_access_callback,
+                pre_access_callback=self._token_manager.pre_access_callback,
             )
         else:
             # TODO - Add error handling
