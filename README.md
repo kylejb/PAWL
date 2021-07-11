@@ -14,10 +14,11 @@ PAWL is supported on Python 3.9+. The recommended way to install PAWL is with pi
 
 `pip install pawl`
 
+## Examples
+
+Examples are provided in [docs/examples](docs/examples).
+
 ## Quickstart
-
-See [examples/authenticate](docs/examples/authenticate.py).
-
 
 ```python
 # Demo in python/ipython shell
