@@ -253,7 +253,7 @@ class Session:
             raise BadJSON(response)
 
     def _set_header_callback(self):
-        if not self._authorizer.is_valid():  # and hasattr(self._authorizer, "refresh"):
+        if not self._authorizer.is_valid() and hasattr(self._authorizer, "refresh"):
             self._authorizer.refresh()
         return {
             "Authorization": f"Bearer {self._authorizer.access_token}",
@@ -290,15 +290,13 @@ class Session:
         token is available. Raises InvalidInvocation in such a case if a refresh token
         is not available.
         """
-        # TODO - test
+        # TODO - Fix params
         params = deepcopy(params) or {}
         if isinstance(data, dict):
             data = deepcopy(data)
-            data["api_type"] = "json"
             data = sorted(data.items())
         if isinstance(json, dict):
             json = deepcopy(json)
-            json["api_type"] = "json"
         url = urljoin(self._requestor.linkedin_url, path)
         return self._request_with_retries(
             data=data,

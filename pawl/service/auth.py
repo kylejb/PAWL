@@ -32,7 +32,7 @@ class Auth(ServiceBase):
         authorized_session = session.session(authorizer)
         self._linkedin._core = self._linkedin._authorized_core = authorized_session
         # TODO - create class for tokens
-        return authorizer.refresh_token
+        return authorizer.access_token
 
     def url(
         self,

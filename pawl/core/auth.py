@@ -6,7 +6,7 @@ import time
 from urllib.parse import quote
 
 from . import constants
-from .exceptions import InvalidInvocation, OAuthException, ResponseException  # noqa
+from .exceptions import InvalidInvocation, ResponseException
 
 
 class AuthPermissions(Enum):
@@ -110,9 +110,11 @@ class BaseAuthorizer:
         A ``True`` return value does not guarantee that the access_token is actually
         valid on the server side.
         """
-        return (
-            self.access_token is not None and time.time() < self._expiration_timestamp
-        )
+        if self.access_token and self._expiration_timestamp is not None:
+            return (
+                self.access_token is not None
+                and time.time() < self._expiration_timestamp
+            )
 
     def _request_token(self, **data):
         url = self._authenticator._requestor.oauth_url + constants.ACCESS_TOKEN_PATH
@@ -136,15 +138,15 @@ class Authorizer(BaseAuthorizer):
     def __init__(
         self,
         authenticator,
-        post_refresh_callback=None,
-        pre_refresh_callback=None,
-        refresh_token=None,
+        post_access_callback=None,
+        pre_access_callback=None,
+        access_token=None,
     ):
         """Authorize access to Linkedin's API."""
         super(Authorizer, self).__init__(authenticator)
-        self._post_refresh_callback = post_refresh_callback
-        self._pre_refresh_callback = pre_refresh_callback
-        self.refresh_token = refresh_token
+        self._post_access_callback = post_access_callback
+        self._pre_access_callback = pre_access_callback
+        self.access_token = access_token
 
     def authorize(self, code: str):
         """Obtain and set authorization tokens based on ``code``.
@@ -162,16 +164,14 @@ class Authorizer(BaseAuthorizer):
             redirect_uri=self._authenticator.redirect_uri,
         )
 
-    # Only supported for certain platforms
+    # Refresh token flow only supported on certain Linkedin platforms
     # Reference: https://docs.microsoft.com/en-us/linkedin/shared/authentication/programmatic-refresh-tokens?context=linkedin/marketing/context # noqa
-    # def refresh(self):
-    #     """Obtain a new access token from the refresh_token."""
-    #     if self._pre_refresh_callback:
-    #         self._pre_refresh_callback(self)
-    #     if self.refresh_token is None:
-    #         raise InvalidInvocation("refresh token not provided")
-    #     self._request_token(
-    #         grant_type="refresh_token", refresh_token=self.refresh_token
-    #     )
-    #     if self._post_refresh_callback:
-    #         self._post_refresh_callback(self)
+    def refresh(self):
+        """WIP - call pre and post callback."""
+        if self._pre_access_callback:
+            self._pre_access_callback(self)
+        if self.access_token is None:
+            raise InvalidInvocation("access token not provided")
+        # self._request_token(grant_type="code", access_token=self.access_token)
+        if self._post_access_callback:
+            self._post_access_callback(self)

@@ -3,6 +3,6 @@
 # flake8: noqa
 # fmt: off
 API_PATH = {
-    "me":            "me/",
-    "reactions":     "reactions?actor={params}",
+    "me":            "me",
+    "reactions":     "reactions",
 }
