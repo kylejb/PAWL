@@ -39,6 +39,9 @@ class Linkedin:
         self.auth = service.Auth(self, None)
 
         self.current_user = service.Me(linkedin=self, _data=None)
+        self.current_user_id = self._set_linkedin_user_id()
+
+        self.reactions = service.Reactions(linkedin=self, _data=None)
 
     def _prepare_core(self, requestor_class=None, requestor_kwargs=None):
         requestor_class = requestor_class or Requestor
@@ -118,3 +121,23 @@ class Linkedin:
         :param params: The query parameters to add to the request (default: None).
         """
         return self._service_request(method="GET", params=params, path=path)
+
+    def post(
+        self,
+        path: str,
+        data: Optional[Union[Dict[str, Union[str, Any]], bytes, IO, str]] = None,
+        params: Optional[Union[str, Dict[str, Union[str, int]]]] = None,
+        json=None,
+    ):
+        return self._service_request(
+            data=data,
+            json=json,
+            method="POST",
+            params=params,
+            path=path,
+        )
+
+    def _set_linkedin_user_id(self):
+        if self._authorized_core._authorizer.access_token is not None:
+            return self.current_user.basic_profile()["id"]
+        return None
