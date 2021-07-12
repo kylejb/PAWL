@@ -138,6 +138,6 @@ class Linkedin:
         )
 
     def _set_linkedin_user_id(self):
-        if self._authorized_core._authorizer.access_token is not None:
+        if self._authorized_core._authorizer.access_token is None:
             return self.current_user.basic_profile()["id"]
         return None
